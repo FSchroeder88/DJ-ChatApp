@@ -1,0 +1,138 @@
+{% extends "home.html" %} {% block content %}
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.css" integrity="sha512-vEia6TQGr3FqC6h55/NdU3QSM5XR6HSl5fW71QTKrgeER98LIMGwymBVM867C1XHIkYD9nMTfWK2A0xcodKHNA==" crossorigin="anonymous" referrerpolicy="no-referrer"
+/>
+
+<script>
+    async function sendMessage() {
+        let fd = new FormData(); // Ein neues Formular wird erstellt
+        let token = '{{ csrf_token }}'; // Token an Variable übergeben
+
+        let today = new Date();
+        let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+        let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        let dateTime = date + ' ' + time;
+
+        fd.append('textmessage', textfield.value); // Mit append kann man etwas anfügen in diesem Fall wollen wir in unser Formular etwas anfügen, den Wert aus der textarea
+        fd.append('csrfmiddlewaretoken', token); // Hier fügen wir noch einen Token an um das Ganze zu indentifizieren
+
+        try { // Fängt Fehler ab und dann würde catch ausgeführt werden
+            messageContainer.innerHTML += `
+                <div id="deleteMessage">
+                    <span class="color-gray">${dateTime}</span> {{ request.user.username }}: <i class="color-gray">${textfield.value} </i>
+                </div>`;
+
+            let response = await fetch('/chat/', {
+                method: 'POST',
+                body: fd
+            });
+            let json = await response.json();
+            let js = JSON.parse(json);
+
+            console.log('Json is', js);
+
+            document.getElementById('deleteMessage').remove();
+            messageContainer.innerHTML += `
+            <div >
+                <span class="color-gray">${dateTime}</span> {{ request.user.username }}: <i>${textfield.value} </i>
+            </div>
+            `;
+
+            scrollToBottom();
+
+            renderMessage(js, request.user);
+            document.getElementById('deleteMessage').remove();
+
+            textfield.value = '';
+
+        } catch (e) {
+            console.error('An error occured', e);
+        }
+
+    }
+
+    function scrollToBottom() {
+        let objDiv = document.getElementById('text-content-scroll');
+        objDiv.scrollTop = objDiv.scrollHeight;
+    }
+
+
+    async function renderMessage(js, user) {
+        let created_at = js['fields']['created_at'];
+        let time = js['fields']['time'];
+        let author = js['fields']['author'];
+        let text = js['fields']['text'];
+
+        messageContainer.innerHTML += `
+        <div class="own-message-bubble ">
+                <div class="created_at">${created_at} ${time}</div>
+                {% load static %}
+                <img class="user-picture-chat" id="show-dialog" src="{{ user.profile_image.url }}"> ${ user }: ${ text }
+        </div>`;
+        scrollToBottom();
+        console.log('Success!!');
+
+    }
+</script>
+
+
+
+<main class="mdl-layout__content">
+
+    {% if request.user.is_authenticated %}
+
+    <div class="text-content" id="text-content-scroll">
+
+        <div class="message-container" id="messageContainer">
+            <!-- Hier wird zunächst eine for-Schleife erstellt durch  for message in messages  und dann wird das Datum mit dem author und dem text wiedergegeben  -->
+
+            {% for message in allMessages %} {% if request.user == message.author %}
+            <div class="own-message-bubble ">
+                <div class="created_at">{{ message.created_at }} {{ message.time }}</div>
+                {% load static %}
+                <img class="user-picture-chat" id="show-dialog" src="{{ message.author.profile_image.url }}"> {{ message.author }}: {{ message.text }}
+            </div>
+
+            {% else %}
+            <div class="other-message-bubble">
+                <div class="created_at">{{ message.created_at }} {{ message.time }}</div>
+                {% load static %}
+                <img class="user-picture-chat" id="show-dialog" src="{{ message.author.profile_image.url }}"> {{ message.author }}: {{ message.text }}
+            </div>
+            {% endif %}{% endfor %}
+
+        </div>
+
+
+        {% else %}
+        <div class="log-text">
+            <h1>Bitte einloggen.</h1>
+        </div>
+
+        {% endif %}
+
+    </div>
+    <form class="sent-container" onsubmit="sendMessage(); return false;" method="POST">
+        <!-- Mit method="post" senden wir an chat etwas. Dies wird nun geändert (action="/chat/")-->
+        <!-- Man baut jetzt eine JavaScript Funktion um die NAchricht zu versenden. return false dient dazu die Seite nicht ständig aktualiesieren -->
+
+        {% csrf_token %}
+        <!-- Damit wird der User zugewiesen der das Ganze verschickt hat-->
+
+
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" name="textmessage" type="text" id="textfield">
+            <!--Variable namens name hinzugefügt-->
+            <label class="mdl-textfield__label" for="sample1">Text...</label>
+
+        </div>
+
+
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+            Senden
+        </button>
+    </form>
+</main>
+
+{% endblock %}

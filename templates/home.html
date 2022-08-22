@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bird-Chat</title>
+
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css"> {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="icon" href="{% static 'img/plaudern.png' %}">
+
+
+    <!--<script src="{% static 'js/script.js' %}"></script>-->
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+
+</head>
+
+<body>
+    <!-- Uses a header that scrolls with the text, rather than staying
+  locked at the top -->
+    <div class="mdl-layout mdl-js-layout">
+        <header class="mdl-layout__header mdl-layout__header--scroll header-background">
+            <div class="mdl-layout__header-row">
+                <!-- Title -->
+                <span class="mdl-layout-title">
+                    <img class="img-fluid mx-auto d-block" src="{% static 'img\plaudern.png' %}"
+                        alt="codingwithmitch logo" width="65" height="65">
+                    {% if request.user.is_authenticated %}
+                    Herzlich Willkommen {{ request.user }}
+                    {% else %}
+                    Herzlich Willkommen, bitte einloggen.
+                    {% endif %}
+
+                </span>
+                <!-- Add spacer, to align navigation to the right -->
+                <div class="mdl-layout-spacer"></div>
+                <!-- Navigation -->
+                <nav class="mdl-navigation">
+
+                    <!-- User Menu -->
+                    {% if user.is_authenticated %}
+
+                    <div>
+                        <img class="user-picture" id="show-dialog" src="{{ request.user.profile_image.url }}">
+
+                    </div>
+
+                    <dialog class="mdl-dialog">
+                        <h4 class="mdl-dialog__title">{{ request.user }}</h4>
+                        <div class="mdl-dialog__content">
+
+                            <img class="user-picture" id="show-dialog" src="{{ request.user.profile_image.url }}">
+
+                            <!--
+                                <form id="update_user_form" method="POST" action="/userprofile/update_user/"
+                            enctype="multipart/form-data"> -->
+
+                        </div>
+                        <div class="mdl-dialog__actions">
+                            <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
+
+                        </div>
+                    </dialog>
+                    <script>
+                        var dialog = document.querySelector('dialog');
+                        var showDialogButton = document.querySelector('#show-dialog');
+                        if (!dialog.showModal) {
+                            dialogPolyfill.registerDialog(dialog);
+                        }
+                        showDialogButton.addEventListener('click', function() {
+                            dialog.showModal();
+                        });
+                        dialog.querySelector('.close').addEventListener('click', function() {
+                            dialog.close();
+                        });
+                    </script>
+
+                    {% else %}
+                    <a class="mdl-navigation__link" href="{% url 'login' %}">Login</a>
+                    <a class="mdl-navigation__link" href="{% url 'register' %}">Register</a> {% endif %}
+
+                </nav>
+            </div>
+        </header>
+
+        <!-- All user  -->
+        <div class="main-space">
+            <div class="user-container">
+                <div class="user-container-2">
+
+                    {% for user in register_users %}
+                    <div class="user-list">
+                        <img class="user-picture-list" id="show-dialog" src="{{ user.profile_image.url }}"> {{ user.username }}
+
+                    </div>
+                    {% endfor %}
+
+                </div>
+                <!-- For Schleife for all users -->
+
+            </div>
+
+
+            <div class="chat-content">
+                <div class="page-content">
+                    <div class="text-content">
+
+                        <!-- Place for the other content  -->
+                        {% block content %} {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
