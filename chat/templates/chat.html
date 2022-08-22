@@ -5,22 +5,56 @@
 />
 
 <script>
+    /* // Function websocket für den weiteren Verlauf
+                                    
+                                                                    let url = `ws://${window.location.host}/ws/socket-server/`
+                                                                    const chatSocket = new WebSocket(url)
+
+                                                                    chatSocket.onmessage = function(e) {
+                                                                        let data = JSON.parse(e.data)
+                                                                        console.log('Data:', data)
+
+                                                                        if (data.type === 'chat') {
+                                                                            let messages = document.getElementById('messageContainer')
+
+                                                                            messages.insertAdjacentHTML('beforeend', `
+                                                                            <div class="own-message-bubble ">
+                                                                                 <p>${data.message}</p>
+                                                                            </div> `)
+                                                                        }
+                                                                    }
+
+                                                                    let form = document.getElementById('textfield')
+                                                                    if (form) {
+                                                                        form.addEventListener('submit', (e) => {
+                                                                            e.preventDefault()
+                                                                            let message = e.target.message.value
+                                                                        chatSocket.send(JSON.stringify({
+                                                                            'message': message
+                                                                        }))
+                                                                        console.log('Message is', message)
+                                                                        form.reset()
+                                                                    })
+                                                                }
+                                                                */
+
+
     async function sendMessage() {
         let fd = new FormData(); // Ein neues Formular wird erstellt
         let token = '{{ csrf_token }}'; // Token an Variable übergeben
 
         let today = new Date();
         let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-        let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        let time = today.getHours();
         let dateTime = date + ' ' + time;
 
         fd.append('textmessage', textfield.value); // Mit append kann man etwas anfügen in diesem Fall wollen wir in unser Formular etwas anfügen, den Wert aus der textarea
         fd.append('csrfmiddlewaretoken', token); // Hier fügen wir noch einen Token an um das Ganze zu indentifizieren
 
-        try { // Fängt Fehler ab und dann würde catch ausgeführt werden
+        try {
             messageContainer.innerHTML += `
                 <div id="deleteMessage">
-                    <span class="color-gray">${dateTime}</span> {{ request.user.username }}: <i class="color-gray">${textfield.value} </i>
+                    <span class="color-gray">${date}</span> {{ request.user.username }}: <i class="color-gray">${textfield.value} </i>
                 </div>`;
 
             let response = await fetch('/chat/', {
@@ -34,14 +68,14 @@
 
             document.getElementById('deleteMessage').remove();
             messageContainer.innerHTML += `
-            <div >
-                <span class="color-gray">${dateTime}</span> {{ request.user.username }}: <i>${textfield.value} </i>
+            <div id="deleteMessage" >
+                <span class="color-gray">${date}</span> {{ request.user.username }}: <i>${textfield.value} </i>
             </div>
             `;
 
             scrollToBottom();
 
-            renderMessage(js, request.user);
+            renderMessage(js);
             document.getElementById('deleteMessage').remove();
 
             textfield.value = '';
@@ -59,16 +93,15 @@
 
 
     async function renderMessage(js, user) {
-        let created_at = js['fields']['created_at'];
+        //let created_at = js['fields']['created_at'];
         let time = js['fields']['time'];
         let author = js['fields']['author'];
         let text = js['fields']['text'];
 
         messageContainer.innerHTML += `
         <div class="own-message-bubble ">
-                <div class="created_at">${created_at} ${time}</div>
-                {% load static %}
-                <img class="user-picture-chat" id="show-dialog" src="{{ user.profile_image.url }}"> ${ user }: ${ text }
+                <div class="created_at"> ${time}</div>
+                <img class="user-picture-chat" id="show-dialog" src="{{ user.profile_image.url }}">{{ user.username }}: ${text}
         </div>`;
         scrollToBottom();
         console.log('Success!!');
@@ -85,7 +118,7 @@
     <div class="text-content" id="text-content-scroll">
 
         <div class="message-container" id="messageContainer">
-            <!-- Hier wird zunächst eine for-Schleife erstellt durch  for message in messages  und dann wird das Datum mit dem author und dem text wiedergegeben  -->
+            <!-- For Schleife message -->
 
             {% for message in allMessages %} {% if request.user == message.author %}
             <div class="own-message-bubble ">
@@ -113,13 +146,9 @@
         {% endif %}
 
     </div>
-    <form class="sent-container" onsubmit="sendMessage(); return false;" method="POST">
-        <!-- Mit method="post" senden wir an chat etwas. Dies wird nun geändert (action="/chat/")-->
-        <!-- Man baut jetzt eine JavaScript Funktion um die NAchricht zu versenden. return false dient dazu die Seite nicht ständig aktualiesieren -->
+    <form class="sent-container" id="message-form" onsubmit="sendMessage(); return false;" method="POST">
 
         {% csrf_token %}
-        <!-- Damit wird der User zugewiesen der das Ganze verschickt hat-->
-
 
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <input class="mdl-textfield__input" name="textmessage" type="text" id="textfield">

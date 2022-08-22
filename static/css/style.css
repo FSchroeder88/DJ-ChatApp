@@ -6,6 +6,35 @@ html {
     height: unset;
 }
 
+.chat-image {
+    width: 200px;
+    height: 200px;
+}
+
+.form-control-pw2 {
+    margin-top: 10px;
+}
+
+.login-button {
+    background-color: #3f7291;
+    border: unset;
+    background-color: #3f7291;
+    border: unset;
+    height: 30px;
+    width: 83px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.form-signin {
+    margin-top: 110px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
 .mdl-layout__content {
     position: absolute !important;
     width: 980px !important;
@@ -65,7 +94,6 @@ html {
 .user-picture {
     height: 45px;
     width: 45px;
-    margin-left: 50px;
     padding-right: 10px;
     border-radius: 100%;
     border-color: green;
@@ -99,6 +127,36 @@ html {
 
 .mdl-navigation__link {
     margin-right: 50px;
+}
+
+.mdl-dialog {
+    background-color: #3f7291 !important;
+}
+
+.mdl-dialog__actions {
+    margin-right: 195px !important;
+    height: unset !important;
+    border: none !important;
+}
+
+.mdl-dialog__title {
+    font-size: 1.5rem !important;
+}
+
+.mdl-dialog__content {
+    padding: 20px 0px 15px !important;
+}
+
+.nav-item {
+    color: black !important;
+    border: none !important;
+}
+
+.dialog-title-image {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
 }
 
 .main-space {

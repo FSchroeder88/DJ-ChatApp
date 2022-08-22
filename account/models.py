@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-
+import os
+from django.conf import settings
 from PIL import Image
 
 # create a superuser

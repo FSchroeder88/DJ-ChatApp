@@ -34,7 +34,7 @@ AUTH_USER_MODEL = "account.User"
 # Application definition
 
 INSTALLED_APPS = [
-    'channels', # For online/offline status user
+    'channels', # For online/offline status user and messages
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,6 +47,12 @@ INSTALLED_APPS = [
 ]
 
 ASGI_APPLICATION = 'ChatApp.asgi.application'
+
+CHANNEL_LAYERS = {
+    'default' : {
+        'BACKEND':'channels.layers.InMemoryChannelLayer'
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
