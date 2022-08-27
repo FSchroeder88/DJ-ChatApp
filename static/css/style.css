@@ -15,6 +15,11 @@ html {
     margin-top: 10px;
 }
 
+.profile-image {
+    width: 180px;
+    height: 180px;
+}
+
 .login-button {
     background-color: #3f7291;
     border: unset;
@@ -94,9 +99,16 @@ html {
 .user-picture {
     height: 45px;
     width: 45px;
-    padding-right: 10px;
+    padding-right: 15px;
     border-radius: 100%;
-    border-color: green;
+    border-width: 5px;
+}
+
+.user-picture-profile {
+    height: 45px;
+    width: 45px;
+    padding-right: 15px;
+    border-radius: 100%;
     border-width: 5px;
 }
 
@@ -106,7 +118,7 @@ html {
 
 .text-content {
     width: 1000px;
-    height: 800px;
+    height: 700px;
     overflow: hidden;
     overflow-y: scroll;
     background-color: #e6f0f5;
@@ -134,9 +146,10 @@ html {
 }
 
 .mdl-dialog__actions {
-    margin-right: 195px !important;
     height: unset !important;
     border: none !important;
+    display: flex !important;
+    flex-direction: row !important;
 }
 
 .mdl-dialog__title {
@@ -150,6 +163,7 @@ html {
 .nav-item {
     color: black !important;
     border: none !important;
+    margin-left: 40px !important;
 }
 
 .dialog-title-image {

@@ -47,25 +47,23 @@
                     {% if user.is_authenticated %}
 
                     <div>
-                        <img class="user-picture" id="show-dialog" src="{{ request.user.profile_image.url }}">
-
+                        <a href="{% url 'chat' %}">
+                            <img class="user-picture" src="{% static 'img\Chat_icon.png' %}"></a>
+                        <img class="user-picture" id="show-dialog" src="{{ user.profile_image.url }}">
                     </div>
 
                     <dialog class="mdl-dialog">
                         <div class="dialog-title-image">
                             <div class="mdl-dialog__content">
-                                <img class="user-picture" id="show-dialog" src="{{ request.user.profile_image.url }}">
-                                <!--
-                                    <form id="update_user_form" method="POST" action="/userprofile/update_user/"
-                                enctype="multipart/form-data"> -->
+                                <img class="user-picture-profile" id="show-dialog" src="{{ user.profile_image.url }}">
                             </div>
                             <h4 class="mdl-dialog__title">{{ request.user }}</h4>
 
                         </div>
 
                         <div class="mdl-dialog__actions">
+                            <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                             <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
-                            <a class="nav-item nav-link" href="{% url 'profile' %}">Change Picture</a>
                         </div>
                     </dialog>
                     <script>

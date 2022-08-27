@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 
 
+
 @login_required(login_url='login/')
 def chat(request):
     if request.method == 'POST':  

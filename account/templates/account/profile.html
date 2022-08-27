@@ -1,14 +1,26 @@
-{% extends "home.html" %}
+{% extends "home.html" %} {% load static %} {% block content %}
 
-{% load static %}
-{% block content %}
-<div class="content-section">
-    <div class="media">
-        <img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
-        <div class="media-body">
-            <h2 class="account-heading">{{ user.username }}</h2>
-            <p class="text-secondary">{{ user.email }}</p>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="content-section">
+        <div class="form-row">
+            <div class="col-md-5">
+                <div class="media">
+                    <img class="profile-image" src="{{  user.profile_image.url }}">
+                    <div class="form-group">
+                        <label class="small mb-1"></label> {{ profile_form.image }}
+                    </div>
+                </div>
+            </div>
+            <div class="media-body">
+                <h2 class="account-heading">{{ user.username }}</h2>
+                <p class="text-secondary">{{ user.email }}</p>
+            </div>
         </div>
+        <br><br>
+        <button type="submit" class="btn btn-dark btn-lg">Save Image</button>
+        <button type="reset" class="btn btn-dark btn-lg">Reset</button>
     </div>
-</div>
-    {% endblock content %}
+</form>
+
+{% endblock content %}

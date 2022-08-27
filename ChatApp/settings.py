@@ -34,14 +34,16 @@ AUTH_USER_MODEL = "account.User"
 # Application definition
 
 INSTALLED_APPS = [
+    'account.apps.AccountConfig', # Importiert die apps.py um anschließend signals.py auszuführen
     'channels', # For online/offline status user and messages
+    'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'account.apps.AccountConfig', # Importiert die apps.py um anschließend signals.py auszuführen
+    
     'chat',
     
 ]
