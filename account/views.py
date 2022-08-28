@@ -1,4 +1,3 @@
-from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate, logout
@@ -7,8 +6,8 @@ from account.forms import RegistrationForm, AccountAuthenticationForm
 from .models import Profile, User
 from .forms import  UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import get_user_model
 from django.contrib import messages
+
 
 
 def register_view(request, *args, **kwargs):
@@ -82,20 +81,19 @@ def get_redirect_if_exists(request):
     return redirect
 
 
-
-
 @login_required  # Require user logged in before they can access profile page
 def profile_view(request):
     Profile.objects.get_or_create(user=request.user) # Important otherwise no creating a profile
     if request.method == 'POST':
-        user_form = UserUpdateForm(request.POST, instance=request.user)
+        #user_form = UserUpdateForm(request.POST, instance=request.user)
         profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-        
-        if user_form.is_valid() and profile_form.is_valid():
+        user_form = UserUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if profile_form.is_valid() and user_form.is_valid():
+            
             user_form.save()
             profile_form.save()
             messages.success(request, f'Your account has been updated!')
-            return redirect('account/profile')  # Redirect back to profile page
+            return redirect('profile')  # Redirect back to profile page
 
     else:
         user_form = UserUpdateForm(instance=request.user)

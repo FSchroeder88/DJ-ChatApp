@@ -21,7 +21,5 @@ urlpatterns = [
     path('register/', register_view, name ="register"),
     path('profile/', profile_view, name  ="profile"),
     
-] 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
+]+ static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
 

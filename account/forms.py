@@ -1,4 +1,3 @@
-from pyexpat import model
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
@@ -31,10 +30,8 @@ class RegistrationForm(UserCreationForm):
 
 
 class AccountAuthenticationForm(forms.ModelForm):
-
     email = forms.CharField()
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
-
     class Meta:
         model = User
         fields = ('email', 'password')
@@ -49,18 +46,15 @@ class AccountAuthenticationForm(forms.ModelForm):
 
 
 class UserUpdateForm(forms.ModelForm):
-    email = forms.EmailField()
-
+    #email = forms.EmailField()
     class Meta:
         model = User
-        fields = ['username', 'email']
+        fields = ['profile_image']
+		#fields = ['username','email']
 
 # Create a ProfileUpdateForm to update image
-
-
 class ProfileUpdateForm(forms.ModelForm):
-
-    image = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-control-file'}))
+   #image = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-group'}))
 
     class Meta:
         model = Profile

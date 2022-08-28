@@ -1,7 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, User
-import os
-from django.conf import settings
 from PIL import Image
 
 
@@ -42,10 +40,10 @@ class User(AbstractBaseUser):
     username = models.CharField(max_length=30, unique=True)
     date_joined = models.DateTimeField(verbose_name="date joined", auto_now_add=True)
     last_login = models.DateTimeField(verbose_name="last login", auto_now=True)
-    is_admin = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=True)
-    is_superuser = models.BooleanField(default=True)
+    is_superuser = models.BooleanField(default=False)
     profile_image = models.ImageField(max_length=255, upload_to=get_profile_image_filepath,
                                       null=True, blank=True, default=get_default_profile_image)
     hide_email = models.BooleanField(default=True)
@@ -71,15 +69,13 @@ class User(AbstractBaseUser):
 class Profile(models.Model):
     # Delete profile when user is deleted
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    image = models.ImageField(default='default.jpg', upload_to='profile_pics')
+    image = models.ImageField(default=get_default_profile_image, null=True, blank=True, upload_to=get_profile_image_filepath,)
 
     def __str__(self):
         return f'{self.user.username} Profile'
 
-def save(self, *args, **kwargs):
-        
+def save(self, *args, **kwargs):    
     super(Profile, self).save(*args, **kwargs)
-
     img = Image.open(self.image.path)  # Open image
 
         # resize image

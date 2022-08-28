@@ -1,26 +1,41 @@
 {% extends "home.html" %} {% load static %} {% block content %}
 
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="content-section">
-        <div class="form-row">
-            <div class="col-md-5">
-                <div class="media">
-                    <img class="profile-image" src="{{  user.profile_image.url }}">
-                    <div class="form-group">
-                        <label class="small mb-1"></label> {{ profile_form.image }}
-                    </div>
+
+
+<div class="content-section">
+    <div class="form-row">
+        <div class="col-md-5">
+            <div class="media">
+                <img class="profile-image" src="{{  request.user.profile.image.url }}">
+                <div class="form-group">
+                    <form class="profile-form" method="post" enctype="multipart/form-data">
+                        {{ profile_form.image }} {% csrf_token %}
+                        <div class="profile-buttons">
+                            <button type="submit" class="btn btn-dark btn-lg">Bild speichern</button>
+                            <button type="reset" class="btn btn-dark btn-lg">Reset</button>
+                        </div>
+                    </form>
+                    <!--<label for="id_image" class="small mb-1"></label> {{ profile_form.image }}-->
                 </div>
             </div>
-            <div class="media-body">
-                <h2 class="account-heading">{{ user.username }}</h2>
-                <p class="text-secondary">{{ user.email }}</p>
+        </div>
+
+        <div class="media-body">
+            <div class="profil-name">
+                <h5>Name:</h5>
+                <h5 class="account-heading">{{ user.username }}</h5>
+            </div>
+            <div class="profil-name">
+                <h5>Email:</h5>
+                <h5 class="text-secondary"> {{ user.email }}</h5>
+            </div>
+            <div class="button-back">
+                <a href="{% url 'chat' %}">
+                    <button class="btn btn-dark btn-lg">Zurück</button></a>
             </div>
         </div>
-        <br><br>
-        <button type="submit" class="btn btn-dark btn-lg">Save Image</button>
-        <button type="reset" class="btn btn-dark btn-lg">Reset</button>
     </div>
-</form>
+</div>
+
 
 {% endblock content %}

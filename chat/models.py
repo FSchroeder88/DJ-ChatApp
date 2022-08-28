@@ -2,7 +2,6 @@ from datetime import date, datetime
 from socket import fromshare
 from django.conf import settings
 from django.db import models
-from django import forms
 
 # Create your models here.
 class Chat(models.Model):

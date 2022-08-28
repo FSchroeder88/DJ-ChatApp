@@ -5,40 +5,6 @@
 />
 
 <script>
-    /* // Function websocket für den weiteren Verlauf
-                                    
-                                                                    let url = `ws://${window.location.host}/ws/socket-server/`
-                                                                    const chatSocket = new WebSocket(url)
-
-                                                                    chatSocket.onmessage = function(e) {
-                                                                        let data = JSON.parse(e.data)
-                                                                        console.log('Data:', data)
-
-                                                                        if (data.type === 'chat') {
-                                                                            let messages = document.getElementById('messageContainer')
-
-                                                                            messages.insertAdjacentHTML('beforeend', `
-                                                                            <div class="own-message-bubble ">
-                                                                                 <p>${data.message}</p>
-                                                                            </div> `)
-                                                                        }
-                                                                    }
-
-                                                                    let form = document.getElementById('textfield')
-                                                                    if (form) {
-                                                                        form.addEventListener('submit', (e) => {
-                                                                            e.preventDefault()
-                                                                            let message = e.target.message.value
-                                                                        chatSocket.send(JSON.stringify({
-                                                                            'message': message
-                                                                        }))
-                                                                        console.log('Message is', message)
-                                                                        form.reset()
-                                                                    })
-                                                                }
-                                                                */
-
-
     async function sendMessage() {
         let fd = new FormData(); // Ein neues Formular wird erstellt
         let token = '{{ csrf_token }}'; // Token an Variable übergeben
@@ -101,14 +67,13 @@
         messageContainer.innerHTML += `
         <div class="own-message-bubble ">
                 <div class="created_at"> ${time}</div>
-                <img class="user-picture-chat" id="show-dialog" src="{{ user.profile_image.url }}">{{ user.username }}: ${text}
+                <img class="user-picture-chat" id="show-dialog" src="{{ user.profile.image.url }}">{{ user.username }}: ${text}
         </div>`;
         scrollToBottom();
         console.log('Success!!');
 
     }
 </script>
-
 
 
 <main class="mdl-layout__content">
@@ -124,19 +89,18 @@
             <div class="own-message-bubble ">
                 <div class="created_at">{{ message.created_at }} {{ message.time }}</div>
                 {% load static %}
-                <img class="user-picture-chat" id="show-dialog" src="{{ message.author.profile_image.url }}"> {{ message.author }}: {{ message.text }}
+                <img class="user-picture-chat" id="show-dialog" src="{{ message.author.profile.image.url }}"> {{ message.author }}: {{ message.text }}
             </div>
 
             {% else %}
             <div class="other-message-bubble">
                 <div class="created_at">{{ message.created_at }} {{ message.time }}</div>
                 {% load static %}
-                <img class="user-picture-chat" id="show-dialog" src="{{ message.author.profile_image.url }}"> {{ message.author }}: {{ message.text }}
+                <img class="user-picture-chat" id="show-dialog" src="{{ message.author.profile.image.url }}"> {{ message.author }}: {{ message.text }}
             </div>
             {% endif %}{% endfor %}
 
         </div>
-
 
         {% else %}
         <div class="log-text">
@@ -148,7 +112,7 @@
     </div>
     <form class="sent-container" id="message-form" onsubmit="sendMessage(); return false;" method="POST">
 
-        {% csrf_token %}
+
 
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <input class="mdl-textfield__input" name="textmessage" type="text" id="textfield">
@@ -156,8 +120,7 @@
             <label class="mdl-textfield__label" for="sample1">Text...</label>
 
         </div>
-
-
+        {% csrf_token %}
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
             Senden
         </button>

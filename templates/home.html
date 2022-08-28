@@ -49,13 +49,13 @@
                     <div>
                         <a href="{% url 'chat' %}">
                             <img class="user-picture" src="{% static 'img\Chat_icon.png' %}"></a>
-                        <img class="user-picture" id="show-dialog" src="{{ user.profile_image.url }}">
+                        <img class="user-picture" id="show-dialog" src="{{ user.profile.image.url }}">
                     </div>
 
                     <dialog class="mdl-dialog">
                         <div class="dialog-title-image">
                             <div class="mdl-dialog__content">
-                                <img class="user-picture-profile" id="show-dialog" src="{{ user.profile_image.url }}">
+                                <img class="user-picture-profile" id="show-dialog" src="{{ user.profile.image.url }}">
                             </div>
                             <h4 class="mdl-dialog__title">{{ request.user }}</h4>
 
@@ -66,6 +66,7 @@
                             <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
                         </div>
                     </dialog>
+
                     <script>
                         var dialog = document.querySelector('dialog');
                         var showDialogButton = document.querySelector('#show-dialog');
@@ -92,19 +93,15 @@
         <div class="main-space">
             <div class="user-container">
                 <div class="user-container-2">
-
+                    <!-- For Schleife for all users -->
                     {% for user in register_users %}
                     <div class="user-list">
-                        <img class="user-picture-list" id="show-dialog" src="{{ user.profile_image.url }}"> {{ user.username }}
+                        <img class="user-picture-list" id="show-dialog" src="{{ user.profile.image.url }}"> {{ user.username }}
 
                     </div>
                     {% endfor %}
-
                 </div>
-                <!-- For Schleife for all users -->
-
             </div>
-
 
             <div class="chat-content">
                 <div class="page-content">
