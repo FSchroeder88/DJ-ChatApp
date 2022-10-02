@@ -14,6 +14,7 @@ from account.views import (
 )
 
 urlpatterns = [
+    path('',  login_view, name ="login"),
     path('admin/', admin.site.urls),
     path('chat/', chat, name ="chat"),
     path('login/', login_view, name ="login"),

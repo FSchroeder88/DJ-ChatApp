@@ -11,6 +11,42 @@ html {
     height: 200px;
 }
 
+#inputEmail {
+    border: unset;
+    height: 30px;
+    width: 200px;
+    margin-top: 15px;
+}
+
+#inputPassword {
+    border: unset;
+    height: 30px;
+    width: 200px;
+    margin-top: 15px;
+}
+
+#inputUsername {
+    border: unset;
+    height: 30px;
+    width: 200px;
+    margin-top: 15px;
+}
+
+#inputPassword1 {
+    border: unset;
+    height: 30px;
+    width: 200px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+#inputPassword2 {
+    border: unset;
+    height: 30px;
+    width: 200px;
+    margin-top: 15px;
+}
+
 .form-control-pw2 {
     margin-top: 10px;
 }
@@ -42,11 +78,21 @@ html {
 
 .mdl-layout__content {
     position: absolute !important;
-    width: 980px !important;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .mdl-layout__header {
     background-color: #3f7291 !important;
+}
+
+@media (max-width: 1024px) {
+    .mdl-layout__header {
+        display: block;
+    }
 }
 
 .mdl-button--raised.mdl-button--colored {
@@ -56,6 +102,44 @@ html {
 .mdl-layout-title {
     margin-left: -50px;
     margin-top: 20px;
+}
+
+@media (max-width: 750px) {
+    .mdl-layout-title {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 600px) {
+    .user-container {
+        display: none !important;
+    }
+    .mdl-layout-title {
+        margin-top: unset !important;
+    }
+    .mdl-layout__header {
+        /* display: none; */
+        font-size: 15px;
+    }
+    .img-fluid {
+        width: 50px;
+        height: 50px;
+    }
+    .user-picture {
+        width: 35px !important;
+        height: 35px !important;
+        padding-right: unset !important;
+    }
+    .chat-content {
+        height: 100vh !important;
+    }
+    .text-content {
+        margin-left: unset !important;
+    }
+    .page-content {
+        width: 100vw !important;
+        /* align-items: center !important; */
+    }
 }
 
 .chat-content {
@@ -136,15 +220,16 @@ html {
 }
 
 .text-content {
-    width: 1000px;
-    height: 700px;
+    width: 80%;
+    height: 80vh;
+    margin-left: 20px;
     overflow: hidden;
     overflow-y: auto;
     background-color: #e6f0f5;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    justify-content: space-between;
+    justify-content: spaces-between;
     align-items: center;
     align-content: normal;
 }
@@ -158,6 +243,15 @@ html {
 
 .mdl-navigation__link {
     margin-right: 50px;
+    position: relative;
+    top: 8px;
+}
+
+.mdl-navigation__link-login {
+    position: relative;
+    top: 8px;
+    text-decoration: unset;
+    color: black;
 }
 
 .mdl-dialog {
@@ -225,10 +319,42 @@ html {
     left: 250px;
 }
 
+@media (max-width: 1200px) {
+    .own-message-bubble {
+        right: 100px;
+    }
+    .other-message-bubble {
+        left: 150px;
+    }
+}
+
+@media (max-width: 900px) {
+    .own-message-bubble {
+        right: 50px;
+    }
+    .other-message-bubble {
+        left: 75px;
+    }
+}
+
+@media (max-width: 600px) {
+    .own-message-bubble {
+        right: 20px;
+    }
+    .other-message-bubble {
+        left: 20px;
+    }
+    .text-content {
+        width: 100%;
+        height: 75vh;
+    }
+}
+
 .user-list {
     color: white;
     margin-left: -30px;
     padding-bottom: 20px;
+    padding-left: 20px;
     display: flex;
     flex-direction: row;
 }
@@ -243,9 +369,30 @@ html {
 .user-picture-list {
     height: 45px;
     width: 45px;
-    margin-left: 50px;
+    margin-left: 40px;
     padding-right: 10px;
     border-radius: 100%;
+}
+
+@media (max-width: 900px) {
+    .user-picture-list {
+        width: 35px;
+        height: 35px;
+    }
+    .user-list {
+        font-size: 12px;
+        padding-left: unset !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .user-picture-list {
+        width: 25px;
+        height: 25px;
+    }
+    .user-list {
+        font-size: 10px;
+    }
 }
 
 .card-signin {
