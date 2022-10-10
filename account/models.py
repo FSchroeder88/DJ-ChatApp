@@ -65,7 +65,7 @@ class User(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return True
 
-
+# Profile model
 class Profile(models.Model):
     # Delete profile when user is deleted
     user = models.OneToOneField(User, on_delete=models.CASCADE)
