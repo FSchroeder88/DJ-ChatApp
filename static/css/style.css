@@ -78,7 +78,7 @@ html {
 
 .mdl-layout__content {
     position: absolute !important;
-    width: 80%;
+    width: 90% !important;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -92,6 +92,11 @@ html {
 @media (max-width: 1024px) {
     .mdl-layout__header {
         display: block;
+    }
+    .mdl-layout__header-row {
+        display: flex !important;
+        justify-content: center !important;
+        padding: unset !important;
     }
 }
 

@@ -36,7 +36,7 @@ AUTH_USER_MODEL = "account.User"
 INSTALLED_APPS = [
     'account.apps.AccountConfig', # Importiert die apps.py um anschließend signals.py auszuführen
     'channels', # For online/offline status user and messages
-    'crispy_forms',
+    # 'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
