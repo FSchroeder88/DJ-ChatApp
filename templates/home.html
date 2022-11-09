@@ -49,13 +49,13 @@
                     <div>
                         <a href="{% url 'chat' %}">
                             <img class="user-picture" src="{% static 'img\Chat_icon.png' %}"></a>
-                        <img class="user-picture" id="show-dialog" src="{{ user.profile.image.url }}">
+                        <img class="user-picture" id="show-dialog" src="{{ user.profile_image.url }}">
                     </div>
 
                     <dialog class="mdl-dialog">
                         <div class="dialog-title-image">
                             <div class="mdl-dialog__content">
-                                <img class="user-picture-profile" id="show-dialog" src="{{ user.profile.image.url }}">
+                                <img class="user-picture-profile" id="show-dialog" src="{{ user.profile_image.url }}">
                             </div>
                             <h4 class="mdl-dialog__title">{{ request.user }}</h4>
 
@@ -96,7 +96,7 @@
                     <!-- For Schleife for all users -->
                     {% for user in register_users %}
                     <div class="user-list">
-                        <img class="user-picture-list" id="show-dialog" src="{{ user.profile.image.url }}"> {{ user.username }}
+                        <img class="user-picture-list" id="show-dialog" src="{{ user.profile_image.url }}"> {{ user.username }}
 
                     </div>
                     {% endfor %}

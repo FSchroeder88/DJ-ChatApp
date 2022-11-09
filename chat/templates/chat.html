@@ -67,7 +67,7 @@
         messageContainer.innerHTML += `
         <div class="own-message-bubble ">
                 <div class="created_at"> ${time}</div>
-                <img class="user-picture-chat" id="show-dialog" src="{{ user.profile.image.url }}">{{ user.username }}: ${text}
+                <img class="user-picture-chat" id="show-dialog" src="{{ user.profile_image.url }}">{{ user.username }}: ${text}
         </div>`;
         scrollToBottom();
         console.log('Success!!');
@@ -104,14 +104,14 @@
             <div class="own-message-bubble ">
                 <div class="created_at">{{ message.created_at }} {{ message.time }}</div>
                 {% load static %}
-                <img class="user-picture-chat" id="show-dialog" src="{{ message.author.profile.image.url }}"> {{ message.author }}: {{ message.text }}
+                <img class="user-picture-chat" id="show-dialog" src="{{ message.author.profile_image.url }}"> {{ message.author }}: {{ message.text }}
             </div>
 
             {% else %}
             <div class="other-message-bubble">
                 <div class="created_at">{{ message.created_at }} {{ message.time }}</div>
                 {% load static %}
-                <img class="user-picture-chat" id="show-dialog" src="{{ message.author.profile.image.url }}"> {{ message.author }}: {{ message.text }}
+                <img class="user-picture-chat" id="show-dialog" src="{{ message.author.profile_image.url }}"> {{ message.author }}: {{ message.text }}
             </div>
             {% endif %}{% endfor %}
 
