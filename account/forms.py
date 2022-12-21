@@ -54,7 +54,7 @@ class UserUpdateForm(forms.ModelForm):
 
 # Create a ProfileUpdateForm to update image
 class ProfileUpdateForm(forms.ModelForm):
-   #image = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-group'}))
+    image = forms.ImageField(widget=forms.FileInput(attrs={'class': 'form-group'}))
 
     class Meta:
         model = Profile

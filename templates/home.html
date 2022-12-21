@@ -49,13 +49,17 @@
                     <div>
                         <a href="{% url 'chat' %}">
                             <img class="user-picture" src="{% static 'img\Chat_icon.png' %}"></a>
-                        <img class="user-picture" id="show-dialog" src="{{ user.profile_image.url }}">
+                        {% if user.profile.image %}
+                        <img class="user-picture" id="show-dialog" src="{{ user.profile.image.url }}"> {% else %}
+                        <img class="user-picture" id="show-dialog" src="{% static 'img\default.jpg' %}"> {% endif %}
                     </div>
 
                     <dialog class="mdl-dialog">
                         <div class="dialog-title-image">
                             <div class="mdl-dialog__content">
-                                <img class="user-picture-profile" id="show-dialog" src="{{ user.profile_image.url }}">
+                                {% if user.profile.image %}
+                                <img class="user-picture" id="show-dialog" src="{{ user.profile.image.url }}"> {% else %}
+                                <img class="user-picture" id="show-dialog" src="{% static 'img\default.jpg' %}"> {% endif %}
                             </div>
                             <h4 class="mdl-dialog__title">{{ request.user }}</h4>
 
@@ -96,8 +100,9 @@
                     <!-- For Schleife for all users -->
                     {% for user in register_users %}
                     <div class="user-list">
-                        <img class="user-picture-list" id="show-dialog" src="{{ user.profile_image.url }}"> {{ user.username }}
-
+                        {% if user.profile.image %}
+                        <img class="user-picture" id="show-dialog" src="{{ user.profile.image.url }}"> {% else %}
+                        <img class="user-picture" id="show-dialog" src="{% static 'img\default.jpg' %}"> {% endif %} {{ user.username }}
                     </div>
                     {% endfor %}
                 </div>

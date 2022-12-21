@@ -357,7 +357,7 @@ html {
 
 .user-list {
     color: white;
-    margin-left: -30px;
+    /* margin-left: -30px; */
     padding-bottom: 20px;
     padding-left: 20px;
     display: flex;
